@@ -18,7 +18,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar w/ text</a>
+            <a class="navbar-brand" href="#">Reccoon Roulette</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -26,13 +26,13 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="#">Opción 1</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <a class="nav-link" href="#">Opción 2</a>
                     </li>
                 </ul>
                 <span class="navbar-text">
@@ -78,6 +78,8 @@
             </tr>
         </table>
     </div>
+    <button onClick="addSegment();">Add Segment</button>
+    <button onClick="deleteSegment();">Delete Segment</button>
     <script>
         // Create new wheel object specifying the parameters at creation time.
         let theWheel = new Winwheel({
@@ -113,6 +115,32 @@
             }
         });
 
+
+        function addSegment() {
+            // Solicita datos al usuario
+            const name = prompt('Nombre del nuevo segmento:');
+            if (!name) return;
+            const image = prompt('Ruta de la imagen (ej: media/juan.png):');
+            if (!image) return;
+
+            // Agrega el segmento y carga la imagen antes de dibujar
+            const newSegment = theWheel.addSegment({ 'image': image, 'text': name });
+            newSegment.imgData = new window.Image();
+            newSegment.imgData.onload = function() {
+                theWheel.draw();
+            };
+            newSegment.imgData.src = image;
+        }
+
+        function deleteSegment() {
+            // Call function to remove a segment from the wheel, by default the last one will be
+            // removed; you can pass in the number of the segment to delete if desired.
+            theWheel.deleteSegment();
+
+            // The draw method of the wheel object must be called to render the changes.
+            theWheel.draw();
+        }
+        
         // Vars used by the code in this page to do power controls.
         let wheelPower = 0;
         let wheelSpinning = false;
@@ -202,6 +230,19 @@
             // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
             alert(indicatedSegment.text + ' says Hi');
         }
+
+        // let theWheel = new Winwheel({
+        //     'numSegments': 4,
+        //     'segments':
+        //         [
+        //             { 'fillStyle': '#eae56f', 'text': 'Segment 1' },
+        //             { 'fillStyle': '#89f26e', 'text': 'Segment 2' },
+        //             { 'fillStyle': '#7de6ef', 'text': 'Segment 3' },
+        //             { 'fillStyle': '#e7706f', 'text': 'Segment 4' }
+        //         ]
+        // });
+
+        
     </script>
 </body>
 
